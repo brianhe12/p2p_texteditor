@@ -46,4 +46,4 @@ Users are able to collaborate with other people on documents and see the changes
    1. Ability to download and upload document (reach goals)
    
  ## Software Architecture
-   
+ <img src = "images/Initial P2P System Architecture.png">
