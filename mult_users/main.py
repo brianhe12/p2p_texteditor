@@ -1,6 +1,21 @@
 import rsa
 from cryptography.fernet import Fernet
 
+
+class User:
+	def __init__(self,pubkey,isme,isrecipient):
+		self.pubkey = pubkey
+		self.isme = isme
+		self.isrecipient = isrecipient
+
+	def sendto(self,userlist):
+		for user in userlist:
+			if(user.isrecipient and not user.isme):
+				pass
+				#rsa.encrypt(key,user.pubkey)       #encrypt the symmetric key with user's pubkey
+				#send_encrypted_sym(user,encryptedkey)
+	def send_encrypted_sym(self,user,key):
+		pass
 # generate symmetric key and write it to file
 key = Fernet.generate_key()
 '''k = open('symmetric.key','wb')
