@@ -26,8 +26,8 @@ Users are able to collaborate with other people on documents and see the changes
 1. Starting a meeting
    1. Click on list of friends to invite
    1. Sends out an invitation with link (perhaps a code with public and private key)
-   1. Use 2 factor authentication
-   1. Use RSA encryption
+   1. Use 2 factor authentication (reach goals)
+   1. Use AES encryption
    1. Have pending status for entering
 1. Joining a meeting
    1. Will receive email of the code
