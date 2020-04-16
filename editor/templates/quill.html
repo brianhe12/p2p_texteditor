@@ -54,8 +54,13 @@
 <!-- Run Function codeAddress onload. We would want to query our database for this specific user and load their file -->
 <script>
   function codeAddress() {
-      alert('ok');
+      alert('Setting Contents');
+      quill.setContents([
+        { insert: 'Testing ' },
+        { insert: 'World!', attributes: { bold: true } },
+        { insert: '\n' }
+      ]);
   }
   window.onload = codeAddress;
-  </script>
+</script>
 
