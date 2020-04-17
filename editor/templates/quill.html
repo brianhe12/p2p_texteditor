@@ -6,13 +6,18 @@
     <form>
         <input name="text" type="hidden">
         <!-- Create the editor container -->
-        <div id="editor">
-            <p>Hello World!</p>
-            <p>Some initial <strong>bold</strong> text</p>
-            <p><br></p>
-        </div>
-        <div class="row">
-          <button class="btn btn-primary" type="submit">Save Document</button>
+        <div class="container" style="display: flex; height: 500px;">
+            <div style="width: 50%;">
+                <div id="editor-one">
+                </div>
+            </div>
+            <div style="flex-grow: 1;">
+                <div id="editor-two">
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" type="submit">Save Document</button>
+            </div>
         </div>
     </form>
 </div>
@@ -23,17 +28,104 @@
 <!-- Include the AJAX library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+
+<script src="{{ url_for('static', filename='node_modules/quill-cursors/dist/quill-cursors.js')}}"></script>
+
 <!-- Initialize Quill editor -->
 <script>
-  var quill = new Quill('#editor', {
+    Quill.register('modules/cursors', QuillCursors);
+  var quillOne = new Quill('#editor-one', {
+      modules: {
+    cursors: {
+      transformOnTextChange: true,
+    },
+  },
     theme: 'snow'
   });
+
+  var quillTwo = new Quill('#editor-two', {
+      modules: {
+    cursors: {
+      transformOnTextChange: true,
+    },
+  },
+    theme: 'snow'
+  });
+
+  // Constant to simulate a high-latency connection when sending cursor
+// position updates.
+const CURSOR_LATENCY = 1000;
+
+// Constant to simulate a high-latency connection when sending
+// text changes.
+const TEXT_LATENCY = 500;
+
+const cursorsOne = quillOne.getModule('cursors');
+const cursorsTwo = quillTwo.getModule('cursors');
+
+cursorsOne.createCursor('cursor', 'User 2', 'blue');
+cursorsOne.createCursor('cursor', 'User 2', 'pink');
+
+function textChangeHandler(quill) {
+  return function(delta, oldContents, source) {
+    if (source === 'user') {
+      setTimeout(() => quill.updateContents(delta), TEXT_LATENCY);
+    }
+  };
+}
+
+function selectionChangeHandler(cursors) {
+  const debouncedUpdate = debounce(updateCursor, 500);
+
+  return function(range, oldRange, source) {
+    if (source === 'user') {
+      // If the user has manually updated their selection, send this change
+      // immediately, because a user update is important, and should be
+      // sent as soon as possible for a smooth experience.
+      updateCursor(range);
+    } else {
+      // Otherwise, it's a text change update or similar. These changes will
+      // automatically get transformed by the receiving client without latency.
+      // If we try to keep sending updates, then this will undo the low-latency
+      // transformation already performed, which we don't want to do. Instead,
+      // add a debounce so that we only send the update once the user has stopped
+      // typing, which ensures we send the most up-to-date position (which should
+      // hopefully match what the receiving client already thinks is the cursor
+      // position anyway).
+      debouncedUpdate(range);
+    }
+  };
+
+  function updateCursor(range) {
+    // Use a timeout to simulate a high latency connection.
+    setTimeout(() => cursors.moveCursor('cursor', range), CURSOR_LATENCY);
+  }
+}
+
+quillOne.on('text-change', textChangeHandler(quillTwo));
+quillTwo.on('text-change', textChangeHandler(quillOne));
+
+quillOne.on('selection-change', selectionChangeHandler(cursorsTwo));
+quillTwo.on('selection-change', selectionChangeHandler(cursorsOne));
+
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    const context = this;
+    const later = function() {
+      timeout = null;
+      func.apply(context, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
 
   var form = document.querySelector('form');
   form.onsubmit = function() {
     // Populate hidden form on submit
     var about = document.querySelector('input[name=text]');
-    about.value = JSON.stringify(quill.getContents());
+    about.value = JSON.stringify(quillOne.getContents());
 
       $.ajax({
       type: "POST",
@@ -55,10 +147,15 @@
 <script>
   function codeAddress() {
       alert('Setting Contents');
-      quill.setContents([
+      quillOne.setContents([
         { insert: 'Testing ' },
         { insert: 'World!', attributes: { bold: true } },
         { insert: '\n' }
+      ]);
+      quillTwo.setContents([
+          { insert: 'Testing ' },
+          { insert: 'World!', attributes: { bold: true } },
+          { insert: '\n' }
       ]);
   }
   window.onload = codeAddress;
