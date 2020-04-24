@@ -35,8 +35,8 @@ def get_post_json():
     
     #place holder for save
     myfile=test.txt
-    with open("test.txt", 'wb') as myfile:
-        myfile.write(data)
+#    with open("test.txt", 'wb') as myfile:
+#        myfile.write(data)
     
     #actual encryption when you save a document
     
@@ -46,11 +46,11 @@ def get_post_json():
     file1=File(user1, myfile)
     file1.generate_filekey()
     file1.cipher_gen()
-    file1.encrypt_file()
+    enc_data = file1.encrypt_data(data)
 
     #actual decryption when you are loading a document
     ek = encrypt_key(file1, user1)
-    decrypt_file(ek, user1, file1)
+    decrypt_data(ek, user1, file1, enc_data)
     
     # Insert into database
     db.documents.insert_one(data)
