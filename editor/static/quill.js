@@ -10,7 +10,7 @@ Quill.register('modules/cursors', QuillCursors)
 
 window.addEventListener('load', () => {
   const ydoc = new Y.Doc()
-  const provider = new WebsocketProvider('wss://demos.yjs.dev', 'quill', ydoc)
+  const provider = new WebsocketProvider('wss://localhost:1234', 'quill', ydoc)
   const type = ydoc.getText('quill')
   const editorContainer = document.createElement('div')
   editorContainer.setAttribute('id', 'editor')
@@ -32,7 +32,7 @@ window.addEventListener('load', () => {
     placeholder: 'Start collaborating...',
     theme: 'snow' // or 'bubble'
   })
-
+  
   const binding = new QuillBinding(type, editor, provider.awareness)
 
   /*
@@ -43,6 +43,41 @@ window.addEventListener('load', () => {
     color: 'blue'
   })
   */
+
+  // Detect right before users exits window -> We need to find a way to detect when ALL USERS exit window
+  window.onbeforeunload = function (e) {
+      // 1. Get Contents
+      console.log(editor.getContents())
+
+      // 2. Encrypt Contents
+
+      // 3. Insert into database
+
+      // Commented out because this piece of code breaks function appartently
+
+      // var about = document.querySelector('input[name=text]');
+      // about.value = JSON.stringify(quillOne.getContents());
+
+      // $.ajax({
+      //   type: "POST",
+      //   url: "/process",
+      //   contentType: "application/json",
+      //   data: about.value,
+      //   dataType: "json",
+      //   success: function(response) {
+      //       console.log(response);
+      //   },
+      //   error: function(err) {
+      //       console.log(err);
+      //   }
+      // });
+
+      return "Please click 'Stay on this Page' and we will give you candy";
+  };
+
+  // TODO:  When would we want to set contents? 
+     // Send GET request to http://localhost:5000/getData to grab saved contents from database
+     // use setContents to set contents of saved editor text
 
   const connectBtn = document.getElementById('y-connect-btn')
   connectBtn.addEventListener('click', () => {

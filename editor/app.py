@@ -38,6 +38,18 @@ def get_post_json():
 
     return jsonify(status="success", data=data)
 
+@app.route('/getData')
+def get_data():
+    # Connect with Mongodb Atlas.
+    client = MongoClient(os.getenv('MONGO_STRING'))
+    db=client.p2p_docs
+    collection=db['documents']
+
+    cursor = collection.find({})
+    for document in cursor:
+        return str(document["ops"])
+
 
 if __name__ == '__main__':
     app.run()
+
