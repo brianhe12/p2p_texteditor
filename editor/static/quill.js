@@ -5,15 +5,17 @@ import { WebsocketProvider } from 'y-websocket'
 import { QuillBinding } from 'y-quill'
 import Quill from 'quill'
 import QuillCursors from 'quill-cursors'
+// import styles from './quill.css';
 
 Quill.register('modules/cursors', QuillCursors)
 
 window.addEventListener('load', () => {
     console.log("hello")
   const ydoc = new Y.Doc()
-  const provider = new WebsocketProvider('wss://localhost:1234', 'quill', ydoc)
+  const provider = new WebsocketProvider('ws://localhost:1234', 'quill', ydoc)
   const type = ydoc.getText('quill')
   const editorContainer = document.createElement('div')
+  // editorContainer.className = styles['editor'];
   editorContainer.setAttribute('id', 'editor')
   document.body.insertBefore(editorContainer, null)
 
@@ -43,11 +45,6 @@ window.addEventListener('load', () => {
     color: 'blue'
   })
   */
-  var listeners = window.getEventListeners(document.body);
-  Object.keys(listeners).forEach(event => {
-      console.log(event, listeners[event]);
-  });
-
   // Detect right before users exits window -> We need to find a way to detect when ALL USERS exit window
   window.onbeforeunload = function (e) {
       // 1. Get Contents
@@ -61,6 +58,7 @@ window.addEventListener('load', () => {
 
        var about = document.querySelector('input[name=text]');
       // here we enter the contents for encryption
+<<<<<<< HEAD
        about.value = JSON.stringify(editor.getContents());
 
        $.ajax({
@@ -76,6 +74,21 @@ window.addEventListener('load', () => {
              console.log(err);
          }
        });
+=======
+      // let data = JSON.stringify(editor.getContents());
+      const axios = require('axios')
+      axios
+          .post('http://127.0.0.1:5000/test', {
+            todo: editor.getContents()
+          })
+          .then(res => {
+            console.log(`statusCode: ${res.statusCode}`)
+            console.log(res)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+>>>>>>> 60240f50cc520aa892c1a857a2b7d5aa9ff97ddd
 
       return "Please click 'Stay on this Page' and we will give you candy";
   };
@@ -100,18 +113,7 @@ window.addEventListener('load', () => {
           //   }
           // });
 //  }
-  
 
-  const connectBtn = document.getElementById('y-connect-btn')
-  connectBtn.addEventListener('click', () => {
-    if (provider.shouldConnect) {
-      provider.disconnect()
-      connectBtn.textContent = 'Connect'
-    } else {
-      provider.connect()
-      connectBtn.textContent = 'Disconnect'
-    }
-  })
 
   window.example = { provider, ydoc, type, binding }
 })
