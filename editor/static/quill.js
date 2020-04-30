@@ -5,7 +5,7 @@ import { WebsocketProvider } from 'y-websocket'
 import { QuillBinding } from 'y-quill'
 import Quill from 'quill'
 import QuillCursors from 'quill-cursors'
-// import styles from './quill.css'
+import styles from './quill.css'
 
 Quill.register('modules/cursors', QuillCursors)
 
@@ -59,23 +59,6 @@ window.addEventListener('load', () => {
 
        var about = document.querySelector('input[name=text]');
       // here we enter the contents for encryption
-<<<<<<< HEAD
-       about.value = JSON.stringify(editor.getContents());
-
-       $.ajax({
-         type: "POST",
-         url: "/process",
-         contentType: "application/json",
-         data: about.value,
-         dataType: "json",
-         success: function(response) {
-             console.log(response);
-         },
-         error: function(err) {
-             console.log(err);
-         }
-       });
-=======
       // let data = JSON.stringify(editor.getContents());
       const axios = require('axios')
       axios
@@ -89,7 +72,6 @@ window.addEventListener('load', () => {
           .catch(error => {
             console.error(error)
           })
->>>>>>> 60240f50cc520aa892c1a857a2b7d5aa9ff97ddd
 
       return "Please click 'Stay on this Page' and we will give you candy";
   };
