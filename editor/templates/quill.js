@@ -9,6 +9,7 @@ import QuillCursors from 'quill-cursors'
 Quill.register('modules/cursors', QuillCursors)
 
 window.addEventListener('load', () => {
+  console.log("seting up editor")
   const ydoc = new Y.Doc()
   const provider = new WebsocketProvider('wss://demos.yjs.dev', 'quill', ydoc)
   const type = ydoc.getText('quill')
