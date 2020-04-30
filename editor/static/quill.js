@@ -16,7 +16,6 @@ window.addEventListener('load', () => {
   editorContainer.setAttribute('id', 'editor')
   document.body.insertBefore(editorContainer, null)
 
-
   var editor = new Quill(editorContainer, {
     modules: {
       cursors: true,
@@ -48,9 +47,9 @@ window.addEventListener('load', () => {
   window.onbeforeunload = function (e) {
       // 1. Get Contents
       console.log(editor.getContents())
-
+      var content = editor.getContents()
       // 2. Encrypt Contents
-
+    
       // 3. Insert into database
 
       // Commented out because this piece of code breaks function appartently

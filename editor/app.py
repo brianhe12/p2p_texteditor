@@ -33,6 +33,7 @@ def get_post_json():
     data = request.get_json()
     print(data)
     
+## in case if we don't use flask, we might need to move all operations to javascript
     user1=User("user1")
     user1.generate_userkeys()
 
@@ -42,7 +43,7 @@ def get_post_json():
     enc_data = file1.encrypt_data(data)
     
     # Insert into database
-#    db.documents.insert_one(data)
+    # db.documents.insert_one(data)
     db.documents.insert_one(enc_data)
 
     return jsonify(status="success", data=data)
@@ -53,10 +54,18 @@ def get_data():
     client = MongoClient(os.getenv('MONGO_STRING'))
     db=client.p2p_docs
     collection=db['documents']
-
+    
+    ek = encrypt_key(file1, user1)
+    decrypt_data(ek, user1, file1, enc_data)
+    
     cursor = collection.find({})
+#    for document in cursor:
+#        return str(document["ops"])
+    
     for document in cursor:
-        return str(document["ops"])
+        dec_content = decrypt_data(ek, user1, file1, str(document["ops"]))
+        return dec_content
+
 
 if __name__ == '__main__':
     app.run()
