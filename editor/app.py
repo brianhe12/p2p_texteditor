@@ -66,7 +66,6 @@ def get_data():
         dec_content = decrypt_data(ek, user1, file1, str(document["ops"]))
         return dec_content
 
-
 if __name__ == '__main__':
     app.run()
 

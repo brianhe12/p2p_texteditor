@@ -47,7 +47,7 @@ window.addEventListener('load', () => {
   window.onbeforeunload = function (e) {
       // 1. Get Contents
       console.log(editor.getContents())
-      var content = editor.getContents()
+//      var content = editor.getContents()
       // 2. Encrypt Contents
     
       // 3. Insert into database
@@ -55,6 +55,7 @@ window.addEventListener('load', () => {
       // Commented out because this piece of code breaks function appartently
 
       // var about = document.querySelector('input[name=text]');
+      // here we enter the contents for encryption
       // about.value = JSON.stringify(quillOne.getContents());
 
       // $.ajax({
@@ -78,6 +79,24 @@ window.addEventListener('load', () => {
      // Send GET request to http://localhost:5000/getData to grab saved contents from database
      // use setContents to set contents of saved editor text
 
+//  window.onload = function (e) {
+    //need to retrieve the data from database ... 
+    // $.ajax({
+          //   type: "POST",
+          //   url: "/getData",
+          //   contentType: "application/json",
+          //   data: about.value,
+          //   dataType: "json",
+          //   success: function(response) {
+          //       console.log(response);
+          //   },
+          //   error: function(err) {
+          //       console.log(err);
+          //   }
+          // });
+//  }
+  
+
   const connectBtn = document.getElementById('y-connect-btn')
   connectBtn.addEventListener('click', () => {
     if (provider.shouldConnect) {
@@ -91,3 +110,5 @@ window.addEventListener('load', () => {
 
   window.example = { provider, ydoc, type, binding }
 })
+
+//filler functions to using the python functions
