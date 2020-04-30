@@ -43,6 +43,10 @@ window.addEventListener('load', () => {
     color: 'blue'
   })
   */
+  var listeners = window.getEventListeners(document.body);
+  Object.keys(listeners).forEach(event => {
+      console.log(event, listeners[event]);
+  });
 
   // Detect right before users exits window -> We need to find a way to detect when ALL USERS exit window
   window.onbeforeunload = function (e) {
