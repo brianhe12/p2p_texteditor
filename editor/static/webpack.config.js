@@ -17,12 +17,12 @@ module.exports = {
   output: {
     globalObject: 'self',
     path: path.resolve(__dirname, './dist/'),
-    filename: '[name].bundle.js',
-    publicPath: '/dist/'
+    filename: '[name].[contenthash].js',
+    publicPath: 'static/dist/'
   },
   devServer: {
     contentBase: path.join(__dirname),
     compress: true,
-    publicPath: '/dist/'
+    publicPath: '/static/dist/'
   }
 }
