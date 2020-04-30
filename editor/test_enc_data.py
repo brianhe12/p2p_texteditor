@@ -25,14 +25,14 @@ user1.generate_userkeys()
 file1=File(user1, myfile)
 
 #creating cipher, userkey, and filekeys
----------------------------------------------------
+#---------------------------------------------------
 print("creating cipher, userkeys, and filekeys ")
 file1.generate_filekey()
 file1.cipher_gen()
 user1.generate_userkeys()
 
 #encrypting the data
-----------------------------------------------------
+#----------------------------------------------------
 print("encrypting" + data)
 enc_data = file1.encrypt_data(data)
 print("this is the encrypted data" + str(enc_data, 'utf-8'))
@@ -40,7 +40,7 @@ print("this is the encrypted data" + str(enc_data, 'utf-8'))
 #db.documents.insert_one(enc_data)
 
 #decrypting the data
-----------------------------------------------------
+#----------------------------------------------------
 print("decrypting")
 print("generating encryption key")
 ek = encrypt_key(file1, user1)
