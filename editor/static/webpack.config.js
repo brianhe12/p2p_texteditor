@@ -11,7 +11,7 @@ module.exports = {
         new ManifestPlugin({
             fileName: 'manifest.json',
             stripSrc: true,
-            publicPath: '/dist/'
+            publicPath: 'static/dist/'
         })
     ],
   output: {
