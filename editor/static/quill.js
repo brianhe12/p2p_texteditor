@@ -16,7 +16,6 @@ window.addEventListener('load', () => {
   editorContainer.setAttribute('id', 'editor')
   document.body.insertBefore(editorContainer, null)
 
-
   var editor = new Quill(editorContainer, {
     modules: {
       cursors: true,
@@ -43,19 +42,24 @@ window.addEventListener('load', () => {
     color: 'blue'
   })
   */
+  var listeners = window.getEventListeners(document.body);
+  Object.keys(listeners).forEach(event => {
+      console.log(event, listeners[event]);
+  });
 
   // Detect right before users exits window -> We need to find a way to detect when ALL USERS exit window
   window.onbeforeunload = function (e) {
       // 1. Get Contents
       console.log(editor.getContents())
-
+//      var content = editor.getContents()
       // 2. Encrypt Contents
-
+    
       // 3. Insert into database
 
       // Commented out because this piece of code breaks function appartently
 
       // var about = document.querySelector('input[name=text]');
+      // here we enter the contents for encryption
       // about.value = JSON.stringify(quillOne.getContents());
 
       // $.ajax({
@@ -79,6 +83,24 @@ window.addEventListener('load', () => {
      // Send GET request to http://localhost:5000/getData to grab saved contents from database
      // use setContents to set contents of saved editor text
 
+//  window.onload = function (e) {
+    //need to retrieve the data from database ... 
+    // $.ajax({
+          //   type: "POST",
+          //   url: "/getData",
+          //   contentType: "application/json",
+          //   data: about.value,
+          //   dataType: "json",
+          //   success: function(response) {
+          //       console.log(response);
+          //   },
+          //   error: function(err) {
+          //       console.log(err);
+          //   }
+          // });
+//  }
+  
+
   const connectBtn = document.getElementById('y-connect-btn')
   connectBtn.addEventListener('click', () => {
     if (provider.shouldConnect) {
@@ -92,3 +114,5 @@ window.addEventListener('load', () => {
 
   window.example = { provider, ydoc, type, binding }
 })
+
+//filler functions to using the python functions
