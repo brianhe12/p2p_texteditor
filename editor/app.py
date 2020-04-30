@@ -25,7 +25,6 @@ FlaskWebpackExt(app)
 
 number_of_users = 2
 
-
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
@@ -33,6 +32,7 @@ def home():
 
 @app.route('/', methods=['POST'])
 def keyCheck():
+    print("entering frontend and passing the keys")
     key1 = request.form['key1']  # getting usernames
 
     if key1 == "password":
@@ -46,6 +46,7 @@ def editor():
 
 @app.route('/process', methods=['POST'])
 def get_post_json():
+    print("posting json onto database")
     # Connect with Mongodb Atlas.
     client = MongoClient(os.getenv('MONGO_STRING'))
     db = client.p2p_docs
@@ -71,6 +72,7 @@ def get_post_json():
 
 @app.route('/getData')
 def get_data():
+    print("retrieving data from database")
     # Connect with Mongodb Atlas.
     client = MongoClient(os.getenv('MONGO_STRING'))
     db = client.p2p_docs

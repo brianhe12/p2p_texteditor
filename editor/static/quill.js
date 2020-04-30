@@ -10,6 +10,7 @@ import QuillCursors from 'quill-cursors'
 Quill.register('modules/cursors', QuillCursors)
 
 window.addEventListener('load', () => {
+    console.log("hello")
   const ydoc = new Y.Doc()
   const provider = new WebsocketProvider('ws://localhost:1234', 'quill', ydoc)
   const type = ydoc.getText('quill')
@@ -56,8 +57,25 @@ window.addEventListener('load', () => {
 
       // Commented out because this piece of code breaks function appartently
 
-      // var about = document.querySelector('input[name=text]');
+       var about = document.querySelector('input[name=text]');
       // here we enter the contents for encryption
+<<<<<<< HEAD
+       about.value = JSON.stringify(editor.getContents());
+
+       $.ajax({
+         type: "POST",
+         url: "/process",
+         contentType: "application/json",
+         data: about.value,
+         dataType: "json",
+         success: function(response) {
+             console.log(response);
+         },
+         error: function(err) {
+             console.log(err);
+         }
+       });
+=======
       // let data = JSON.stringify(editor.getContents());
       const axios = require('axios')
       axios
@@ -71,6 +89,7 @@ window.addEventListener('load', () => {
           .catch(error => {
             console.error(error)
           })
+>>>>>>> 60240f50cc520aa892c1a857a2b7d5aa9ff97ddd
 
       return "Please click 'Stay on this Page' and we will give you candy";
   };
