@@ -55,8 +55,6 @@ window.addEventListener('load', () => {
     
       // 3. Insert into database
 
-      // Commented out because this piece of code breaks function appartently
-
        var about = document.querySelector('input[name=text]');
       // here we enter the contents for encryption
       // let data = JSON.stringify(editor.getContents());

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for, m
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
+from CBC import *
 
 load_dotenv()
 
@@ -89,11 +90,16 @@ def get_data():
         dec_content = decrypt_data(ek, user1, file1, str(document["ops"]))
         return dec_content
 
-
 @app.route('/test', methods=['POST'])
 def test():
+    # Connect with Mongodb Atlas.
+    client = MongoClient(os.getenv('MONGO_STRING'))
+    db = client.p2p_docs
+
     data = request.get_json()
     print(data)
+
+    db.documents.insert_one(data)
     return "success", 201
 
 
