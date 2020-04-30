@@ -1,5 +1,7 @@
 import rsa
 from cryptography.fernet import Fernet
+import keyring
+import os
 
 #Fernet is a AES CBC with 128 bit key encryption using PKCS7 padding
     #AES: Security-grade Block cipher (AES-128) using 128 bit long symmetric key. It consists of 10 rounds in each round consists of subsitution, tranposition, and mixing PT input
@@ -53,6 +55,11 @@ class File:
     def cipher_gen():
         ciper = Fernet(symkey)
         
+    def encrypt_data(input):
+        print("encrypting data: "+ input)
+        encrypted_data = cipher.encrypt(input)
+        return encrypted_data
+        
     def encrypt_file():
         with open(file_name, 'rb') as myfile:
             myfiledata = myfile.read()
@@ -88,3 +95,26 @@ def decrypt_file(encrypted_key, User, File):
         print(User.username + " failed to decrypt")
     else:
         print(User.username + " successfully decrypted the data")
+
+def decrypt_data(encrypted_key, User, File, input):
+    print("decrypting data: "+ input)
+    print(User.username + " attempts to decrypt with his private key...")
+    try:
+        dpubkey = rsa.decrypt(encrypted_key, User.privkey)
+        cipher = Fernet(dpubkey)
+        
+        myfile = File.filename
+            
+        decrypted_data = cipher.decrypt(input)
+        
+        return decrypted_data
+    except:
+        print(User.username + " failed to decrypt")
+    else:
+        print(User.username + " successfully decrypted the data")
+        
+def save_key(sys, user, key):
+    keyring.set_password(sys, user, key)
+
+def get_key(sys, user):
+    keyring.get_password(sys, user)
