@@ -58,5 +58,3 @@ Users are able to collaborate with other people on documents and see the changes
 p2p_texteditor\editor> python .\app.py
 
 p2p_texteditor\editor\static\node_modules\y-websocket\bin> node .\server.js
-
-p2p_texteditor\editor\static> .\node_modules\.bin\webpack-dev-server.cmd
