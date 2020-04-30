@@ -32,9 +32,18 @@ def get_post_json():
 
     data = request.get_json()
     print(data)
+    
+    user1=User("user1")
+    user1.generate_userkeys()
 
+    file1=File(user1, myfile)
+    file1.generate_filekey()
+    file1.cipher_gen()
+    enc_data = file1.encrypt_data(data)
+    
     # Insert into database
-    db.documents.insert_one(data)
+#    db.documents.insert_one(data)
+    db.documents.insert_one(enc_data)
 
     return jsonify(status="success", data=data)
 
@@ -48,7 +57,6 @@ def get_data():
     cursor = collection.find({})
     for document in cursor:
         return str(document["ops"])
-
 
 if __name__ == '__main__':
     app.run()
