@@ -77,7 +77,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/quill/dist/";
+/******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -24894,7 +24894,7 @@ quill__WEBPACK_IMPORTED_MODULE_3___default.a.register('modules/cursors', quill_c
 
 window.addEventListener('load', () => {
   const ydoc = new yjs__WEBPACK_IMPORTED_MODULE_0__["Doc"]()
-  const provider = new y_websocket__WEBPACK_IMPORTED_MODULE_1__["WebsocketProvider"]('wss://demos.yjs.dev', 'quill', ydoc)
+  const provider = new y_websocket__WEBPACK_IMPORTED_MODULE_1__["WebsocketProvider"]('wss://localhost:1234', 'quill', ydoc)
   const type = ydoc.getText('quill')
   const editorContainer = document.createElement('div')
   editorContainer.setAttribute('id', 'editor')
@@ -24916,7 +24916,7 @@ window.addEventListener('load', () => {
     placeholder: 'Start collaborating...',
     theme: 'snow' // or 'bubble'
   })
-
+  
   const binding = new y_quill__WEBPACK_IMPORTED_MODULE_2__["QuillBinding"](type, editor, provider.awareness)
 
   /*
@@ -24927,6 +24927,41 @@ window.addEventListener('load', () => {
     color: 'blue'
   })
   */
+
+  // Detect right before users exits window -> We need to find a way to detect when ALL USERS exit window
+  window.onbeforeunload = function (e) {
+      // 1. Get Contents
+      console.log(editor.getContents())
+
+      // 2. Encrypt Contents
+
+      // 3. Insert into database
+
+      // Commented out because this piece of code breaks function appartently
+
+      // var about = document.querySelector('input[name=text]');
+      // about.value = JSON.stringify(quillOne.getContents());
+
+      // $.ajax({
+      //   type: "POST",
+      //   url: "/process",
+      //   contentType: "application/json",
+      //   data: about.value,
+      //   dataType: "json",
+      //   success: function(response) {
+      //       console.log(response);
+      //   },
+      //   error: function(err) {
+      //       console.log(err);
+      //   }
+      // });
+
+      return "Please click 'Stay on this Page' and we will give you candy";
+  };
+
+  // TODO:  When would we want to set contents? 
+     // Send GET request to http://localhost:5000/getData to grab saved contents from database
+     // use setContents to set contents of saved editor text
 
   const connectBtn = document.getElementById('y-connect-btn')
   connectBtn.addEventListener('click', () => {

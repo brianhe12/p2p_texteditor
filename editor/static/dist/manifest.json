@@ -1,0 +1,4 @@
+{
+  "quill.js": "static/dist/quill.bundle.js",
+  "quill.js.map": "static/dist/quill.bundle.js.map"
+}

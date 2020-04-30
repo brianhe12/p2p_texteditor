@@ -7,6 +7,22 @@ load_dotenv()
 
 app = Flask(__name__)
 
+from flask_webpackext.project import WebpackTemplateProject
+from flask_webpackext import FlaskWebpackExt
+
+project = WebpackTemplateProject(
+    __name__,
+    project_folder='src',
+    config_path='config.json',
+)
+
+app.config.update(dict(
+    WEBPACKEXT_PROJECT=project,
+))
+
+# Initialize extension
+FlaskWebpackExt(app)
+
 number_of_users = 2
 
 @app.route('/', methods=['GET'])
@@ -18,7 +34,7 @@ def keyCheck():
     key1 = request.form['key1']  # getting usernames
 
     if key1 == "password":
-        return redirect('http://127.0.0.1:8080/quill.html', code=301)
+        return render_template('quill.html')
 
 @app.route('/editor')
 def editor():
