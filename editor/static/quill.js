@@ -5,7 +5,7 @@ import { WebsocketProvider } from 'y-websocket'
 import { QuillBinding } from 'y-quill'
 import Quill from 'quill'
 import QuillCursors from 'quill-cursors'
-// import styles from './quill.css';
+// import styles from './quill.css'
 
 Quill.register('modules/cursors', QuillCursors)
 
@@ -14,9 +14,10 @@ window.addEventListener('load', () => {
   const provider = new WebsocketProvider('ws://localhost:1234', 'quill', ydoc)
   const type = ydoc.getText('quill')
   const editorContainer = document.createElement('div')
-  // editorContainer.className = styles['editor'];
-  editorContainer.setAttribute('id', 'editor')
-  document.body.insertBefore(editorContainer, null)
+    editorContainer.setAttribute('id', 'editor')
+    document.body.insertBefore(editorContainer, null)
+    // editorContainer.className = styles['my-class']
+
 
   var editor = new Quill(editorContainer, {
     modules: {

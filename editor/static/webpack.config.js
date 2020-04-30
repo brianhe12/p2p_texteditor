@@ -2,6 +2,14 @@ const path = require('path')
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
   mode: 'development',
   devtool: 'source-map',
   entry: {
