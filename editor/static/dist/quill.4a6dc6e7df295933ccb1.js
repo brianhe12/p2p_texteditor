@@ -27174,9 +27174,9 @@ window.addEventListener('load', () => {
         .then(response => {
             let d = JSON.parse(response.data.data).contents.ops;
             console.log(d);
-            // if (type.length === 0) {
-            //     editor.setContents(d);
-            // }
+            if (type.length === 0) {
+                editor.setContents(d);
+            }
         })
         .catch(error => console.log(error))
 
@@ -27249,4 +27249,4 @@ window.addEventListener('load', () => {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=quill.3e1efaa42e9472b3a044.js.map
+//# sourceMappingURL=quill.4a6dc6e7df295933ccb1.js.map
