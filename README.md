@@ -1,7 +1,6 @@
 # p2p_texteditor
 Collaborative text editor design on encrypted channel
 
-<<<<<<< HEAD
 ![](gif/p2p.gif)
 
 ## Team Members
@@ -10,7 +9,6 @@ Brian, Danny, Edwin, Yufeng, Rachid
 <p align="center">
   <img src = "demo/p3p.gif">
 </p>
->>>>>>> 1b34bb8585cf7c64028fea875da6dd9b0b40af18
 
 ## Minimum Value Product
 Users are able to collaborate with other people on documents and see the changes in real-time.
