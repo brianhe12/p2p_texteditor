@@ -8,7 +8,6 @@
         background-size:100% 100%;
         background-attachment: fixed;
       }
-
 		h1{
 			font-family: monospace;
 			font-weight: bold;
@@ -50,10 +49,21 @@
       border: 1px solid ;
       border-radius:5px;
       font-size:20px;
+      text-align:center;
 
     }
-    a:link, a:visited { 
-      background-color: #4CAF50;
+    input[type=password] {
+      height:30px;
+      width:250px;
+      border: 1px solid ;
+      border-radius:5px;
+      font-size:20px;
+      text-align: center;
+
+    }
+    a.return:link, a.return:visited { 
+      width:60px;
+      background-color:rosybrown;
       color:white;
       padding: 12px;
       text-align: center;
@@ -68,24 +78,38 @@
     }
 		
 	</style>
-
-
-    <title>ONLINE P2P</title>
+    <title>P2P Login Page</title>
 
   </head>
+<h1>User Login</h1>
+<br>
+
 <body>
-    <h1>Online P2P Editor</h1>
-    <br>
-    <form method="POST">
-      <label for="fname" style="color:red">Please enter your own key:</label><br> <br>
-      <input type="text" name="key1"><br>
-      <br>
-      <input type="submit" value="Enter">
+    <form action="" method="POST">
+            <p>
+                <label for = "">Username: </label>
+                <input type="text" name = "" id="">       
+            </p>
+            <br>
+            <p>
+                <label for ="">Password: </label>
+                <input type ="password" name="" id ="">         
+            </p>
+            <br>
+            <p>
+                <input type="checkbox" name ="" id="">
+                <label for ="">Remember Me</label>
+            </p>
+            <br>
+            <p>
+                <input type="submit" value="Login">
+            </p>
     </form>
     <br>
-    <p>
-    <a href="/login">Login Page For Registered Users</a>
+    <p >
+        <a class="return" href="/">Return</a>
     </p>
     
+
 </body>
 </html>

@@ -36,6 +36,9 @@ number_of_users = 2
 def home():
     return render_template('index.html')
 
+@app.route('/login',methods=['GET','POST'])
+def login():
+    return render_template('login.html')
 
 @app.route('/', methods=['POST'])
 def keyCheck():
