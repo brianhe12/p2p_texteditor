@@ -45,6 +45,7 @@ Users are able to collaborate with other people on documents and see the changes
 * Being able to choose and work on multiple documents 
 * Choosing permissions for different users
 * System to track users and files (permissions & keys)
+* SSL socket connections between editors
 
 ## To Run locally
 
