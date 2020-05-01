@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <meta charset="UTF-8">
     <style type="text/css">
 		  body{ 
@@ -73,19 +75,30 @@
     <title>ONLINE P2P</title>
 
   </head>
-<body>
-    <h1>Online P2P Editor</h1>
-    <br>
-    <form method="POST">
-      <label for="fname" style="color:red">Please enter your own key:</label><br> <br>
-      <input type="text" name="key1"><br>
-      <br>
-      <input type="submit" value="Enter">
-    </form>
-    <br>
+
+<h1>Online P2P Editor</h1>
+<br>
+<form method="POST">
+  <label for="fname" style="color:red">Please enter your own key:</label><br> <br>
+  <input type="text" id="key1" name="key1"><br>
+  <br>
+  <input type="submit" value="Enter" onclick="myFunction()">
+</form>
+  <br>
     <p>
     <a href="/login">Login Page For Registered Users</a>
     </p>
-    
-</body>
-</html>
+  <script>
+    // ajax command to send username to the flask server
+    function myFunction() {
+      const person = prompt("Please enter your name: (Blank for Anonymous)");
+      $.ajax({
+      type: "POST",
+      url: "http://127.0.0.1:5000/set_user",
+        contentType: "text/plain",
+      data: person,
+      success: console.log("success")
+      });
+    }
+  </script>
+  </body>
