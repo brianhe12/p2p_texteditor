@@ -43,7 +43,9 @@ window.addEventListener('load', () => {
         .then(response => {
             let d = JSON.parse(response.data.data).contents.ops;
             console.log(d);
-            editor.setContents(d);
+            if (type.length === 0) {
+                editor.setContents(d);
+            }
         })
         .catch(error => console.log(error))
 
