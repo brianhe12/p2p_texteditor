@@ -1,6 +1,10 @@
 # p2p_texteditor
 Collaborative text editor design on encrypted channel
 
+<p align="center">
+  <img src = "demo/p2p.gif">
+</p>
+
 ## Minimum Value Product
 Users are able to collaborate with other people on documents and see the changes in real-time.
 
