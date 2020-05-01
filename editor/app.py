@@ -9,7 +9,7 @@ from cryptography.fernet import Fernet
 load_dotenv()
 
 # Generate Keys
-key = Fernet.generate_key()
+key = bytes(os.getenv('KEY').encode("utf-8"))
 encryption_type = Fernet(key)
 
 app = Flask(__name__)
