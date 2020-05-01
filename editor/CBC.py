@@ -56,7 +56,7 @@ class File:
         self.cipher = Fernet(self.symkey)
         
     def encrypt_data(self,input):
-        print("encrypting data: "+ input)
+#        print("encrypting data: "+ input)
         encrypted_data = self.cipher.encrypt(bytes(input, 'utf-8'))
         return encrypted_data
         

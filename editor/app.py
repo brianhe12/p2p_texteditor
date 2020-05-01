@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 from CBC import *
+import json
 
 load_dotenv()
 
@@ -45,6 +46,7 @@ def editor():
     return render_template('quill.html')
 
 
+#may leave alone
 @app.route('/process', methods=['POST'])
 def get_post_json():
     print("posting json onto database")
@@ -85,9 +87,16 @@ def get_data():
     cursor = collection.find({})
     #    for document in cursor:
     #        return str(document["ops"])
+    
 
     for document in cursor:
-        dec_content = decrypt_data(ek, user1, file1, str(document["ops"]))
+    
+        print("decrypting")
+        print("generating encryption key")
+        ek = encrypt_key(file1, user1)
+        dec_content = decrypt_data(ek, user1, file1, document['data'])
+        print ("this is decrypted data: "+str(dec_data, 'utf-8'))
+#        dec_content = decrypt_data(ek, user1, file1, str(document["ops"]))
         return dec_content
 
 @app.route('/test', methods=['POST'])
@@ -98,10 +107,26 @@ def test():
 
     data = request.get_json()
     print(data)
-
-    db.documents.insert_one(data)
+    
+#    print("encrypting" + str(data, 'utf-8'))
+    val = json.dumps(data)
+    enc_data = file1.encrypt_data(val)
+    print("this is the encrypted data" + str(enc_data, 'utf-8'))
+    
+    dic = {'data' : enc_data}
+    db.documents.insert_one(dic)
     return "success", 201
 
-
 if __name__ == '__main__':
+    print("creating file 1 and user1")
+    myfile="file1"
+    user1=User("user1")
+    user1.generate_userkeys()
+    file1=File(user1, myfile)
+    
+    print("creating cipher, userkeys, and filekeys ")
+    file1.generate_filekey()
+    file1.cipher_gen()
+    user1.generate_userkeys()
+    
     app.run()
