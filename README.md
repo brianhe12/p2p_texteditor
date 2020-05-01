@@ -2,7 +2,7 @@
 Collaborative text editor design on encrypted channel
 
 <p align="center">
-  <img src = "demo/p2p.gif">
+  <img src = "demo/p3p.gif">
 </p>
 
 ## Minimum Value Product
