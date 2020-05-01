@@ -23,9 +23,7 @@ import os
     #encrypted key is generated with symkey and private key
     #Each file has a unique sym key
     #Each user has a unique priv and pub key
-    
-#
-    
+
 #all encapsualtions will be hidden
 #User object encapsulates its own username, pubkey, priv key
 class User:
