@@ -131,13 +131,13 @@ def testGet():
     # Read from file and decrypt
     with open('database.txt', "rb") as f:
         encrypted_message = f.readline()
-        print(encrypted_message.decode('utf-8'))
+        print(encrypted_message)
         global key
         global encryption_type
         decrypted_message = encryption_type.decrypt(encrypted_message)
         print(decrypted_message)
 
-    return {'data': 'test data'}
+    return {'data': decrypted_message.decode('utf-8')}
 
 if __name__ == '__main__':
     # print("creating file 1 and user1")

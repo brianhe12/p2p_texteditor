@@ -27172,8 +27172,9 @@ window.addEventListener('load', () => {
     const axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
     axios.get('http://127.0.0.1:5000/testGet')
         .then(response => {
-            let d = response.data.data;
+            let d = JSON.parse(response.data.data).contents.ops;
             console.log(d);
+            editor.setContents(d);
         })
         .catch(error => console.log(error))
 
@@ -27202,7 +27203,7 @@ window.addEventListener('load', () => {
       const axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
       axios
           .post('http://127.0.0.1:5000/test', {
-            todo: editor.getContents()
+            contents: editor.getContents()
           })
           .then(res => {
             console.log(`statusCode: ${res.statusCode}`)
@@ -27246,4 +27247,4 @@ window.addEventListener('load', () => {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=quill.726a432149d12da687e9.js.map
+//# sourceMappingURL=quill.8beacc5d2ed04ee4523e.js.map

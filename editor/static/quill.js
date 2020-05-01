@@ -41,8 +41,9 @@ window.addEventListener('load', () => {
     const axios = require('axios')
     axios.get('http://127.0.0.1:5000/testGet')
         .then(response => {
-            let d = response.data.data;
+            let d = JSON.parse(response.data.data).contents.ops;
             console.log(d);
+            editor.setContents(d);
         })
         .catch(error => console.log(error))
 
@@ -71,7 +72,7 @@ window.addEventListener('load', () => {
       const axios = require('axios')
       axios
           .post('http://127.0.0.1:5000/test', {
-            todo: editor.getContents()
+            contents: editor.getContents()
           })
           .then(res => {
             console.log(`statusCode: ${res.statusCode}`)
