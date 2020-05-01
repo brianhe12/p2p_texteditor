@@ -12,6 +12,17 @@ load_dotenv()
 key = bytes(os.getenv('KEY').encode("utf-8"))
 encryption_type = Fernet(key)
 
+#generating new keys
+myfile="file1"
+user1=User("user1")
+user1.generate_userkeys()
+file1=File(user1, myfile)
+
+file1.generate_filekey()
+file1.cipher_gen()
+user1.generate_userkeys()
+
+
 app = Flask(__name__)
 
 from flask_webpackext.project import WebpackTemplateProject
@@ -108,13 +119,16 @@ def editor():
 def test():
     global key
     global encryption_type
-
+    global file1
+    global user1
     data = request.get_json()
     print(data)
 
     # Encrypt
     encrypted_message = encryption_type.encrypt(json.dumps(data).encode())
     print(encrypted_message)
+    
+#    enc_data = file1.encrypt_data(json.dumps(data).encode())
 
     # Write to file
     f = open("database.txt", "wb")
@@ -128,12 +142,22 @@ def test():
 def testGet():
     global key
     global encryption_type
+    global file1
+    global user1
+    
     # Read from file and decrypt
     with open('database.txt', "rb") as f:
         encrypted_message = f.readline()
         print(encrypted_message)
         global key
         global encryption_type
+        global file1
+        global user1
+        
+#        ek = encrypt_key(file1, user1)
+#        dec_data = decrypt_data(ek, user1, file1, enc_data)
+
+
         decrypted_message = encryption_type.decrypt(encrypted_message)
         print(decrypted_message)
 
