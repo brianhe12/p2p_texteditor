@@ -1,5 +1,4 @@
 /* eslint-env browser */
-
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { QuillBinding } from 'y-quill'
@@ -10,16 +9,14 @@ import styles from './quill.css'
 Quill.register('modules/cursors', QuillCursors)
 
 window.addEventListener('load', () => {
-    console.log("hello")
     const ydoc = new Y.Doc()
     const provider = new WebsocketProvider('ws://localhost:1234', 'quill', ydoc)
     const type = ydoc.getText('quill')
     const editorContainer = document.createElement('div')
     editorContainer.setAttribute('id', 'editor')
     document.body.insertBefore(editorContainer, null)
-    // editorContainer.className = styles['my-class']
 
-
+    // create editor
     var editor = new Quill(editorContainer, {
         modules: {
             cursors: true,
@@ -38,42 +35,35 @@ window.addEventListener('load', () => {
 
     const binding = new QuillBinding(type, editor, provider.awareness)
 
+    // grab document data
     const axios = require('axios')
-    axios.get('http://127.0.0.1:5000/testGet')
+    axios.get('http://127.0.0.1:5000/get_text')
         .then(response => {
             let d = JSON.parse(response.data.data).contents.ops;
-            console.log(d);
             if (type.length === 0) {
                 editor.setContents(d);
             }
         })
         .catch(error => console.log(error))
 
+    // get and set username if provided
+    axios.get('http://127.0.0.1:5000/get_user')
+        .then(response => {
+            let user = response.data.user;
+            if (user.length != 0) {
+                provider.awareness.setLocalStateField('user', {
+                name: user
+              })
+            }
+        })
+        .catch(error => console.log(error))
 
-
-  /*
-  // Define user name and user name
-  // Check the quill-cursors package on how to change the way cursors are rendered
-  provider.awareness.setLocalStateField('user', {
-    name: 'Typing Jimmy',
-    color: 'blue'
-  })
-  */
-  // Detect right before users exits window -> We need to find a way to detect when ALL USERS exit window
+  // detect right before users exits window
   window.onbeforeunload = function (e) {
-      // 1. Get Contents
-      console.log(editor.getContents())
-//      var content = editor.getContents()
-      // 2. Encrypt Contents
-    
-      // 3. Insert into database
-
-       var about = document.querySelector('input[name=text]');
-      // here we enter the contents for encryption
-      // let data = JSON.stringify(editor.getContents());
+      // send contents for encryption
       const axios = require('axios')
       axios
-          .post('http://127.0.0.1:5000/test', {
+          .post('http://127.0.0.1:5000/set_text', {
             contents: editor.getContents()
           })
           .then(res => {
@@ -83,33 +73,7 @@ window.addEventListener('load', () => {
           .catch(error => {
             console.error(error)
           })
-
-      return "Please click 'Stay on this Page' and we will give you candy";
   };
-
-  // TODO:  When would we want to set contents? 
-     // Send GET request to http://localhost:5000/getData to grab saved contents from database
-     // use setContents to set contents of saved editor text
-
-//  window.onload = function (e) {
-    //need to retrieve the data from database ... 
-    // $.ajax({
-          //   type: "POST",
-          //   url: "/getData",
-          //   contentType: "application/json",
-          //   data: about.value,
-          //   dataType: "json",
-          //   success: function(response) {
-          //       console.log(response);
-          //   },
-          //   error: function(err) {
-          //       console.log(err);
-          //   }
-          // });
-//  }
-
 
   window.example = { provider, ydoc, type, binding }
 })
-
-//filler functions to using the python functions
