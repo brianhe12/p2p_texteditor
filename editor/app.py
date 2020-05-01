@@ -4,8 +4,13 @@ from dotenv import load_dotenv
 import os
 from CBC import *
 import json
+from cryptography.fernet import Fernet
 
 load_dotenv()
+
+# Generate Keys
+key = Fernet.generate_key()
+encryption_type = Fernet(key)
 
 app = Flask(__name__)
 
@@ -101,37 +106,51 @@ def get_data():
 
 @app.route('/test', methods=['POST'])
 def test():
-    # Connect with Mongodb Atlas.
-    client = MongoClient(os.getenv('MONGO_STRING'))
-    db = client.p2p_docs
+    global key
+    global encryption_type
 
     data = request.get_json()
     print(data)
     
-#    print("encrypting" + str(data, 'utf-8'))
-    val = json.dumps(data)
-    enc_data = file1.encrypt_data(val)
-    print("this is the encrypted data" + str(enc_data, 'utf-8'))
-    
-    dic = {'data' : enc_data}
-    db.documents.insert_one(dic)
+    data = json.dumps(data)
+
+    # Encrypt
+    encrypted_message = encryption_type.encrypt(data.encode())
+    print(encrypted_message)
+
+    # Write to file
+    f = open("database.txt", "wb")
+    f.write(encrypted_message)
+    f.close()
+
     return "success", 201
 
 
 @app.route('/testGet', methods=['GET'])
 def testGet():
+    global key
+    global encryption_type
+
+    # Read from file and decrypt
+    with open('database.txt', "rb") as f:
+        encrypted_message = (f.readline())
+        print(encrypted_message)
+        
+        # decrypted_message = encryption_type.decrypt(encrypted_message)
+        # print(decrypted_message)
+
     return {'data': 'test data'}
 
 if __name__ == '__main__':
-    print("creating file 1 and user1")
-    myfile="file1"
-    user1=User("user1")
-    user1.generate_userkeys()
-    file1=File(user1, myfile)
+    # print("creating file 1 and user1")
+    # myfile="file1"
+    # user1=User("user1")
+    # user1.generate_userkeys()
+    # file1=File(user1, myfile)
     
-    print("creating cipher, userkeys, and filekeys ")
-    file1.generate_filekey()
-    file1.cipher_gen()
-    user1.generate_userkeys()
+    # print("creating cipher, userkeys, and filekeys ")
+    # file1.generate_filekey()
+    # file1.cipher_gen()
+    # user1.generate_userkeys()
     
     app.run()
