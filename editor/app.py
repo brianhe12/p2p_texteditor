@@ -117,6 +117,11 @@ def test():
     db.documents.insert_one(dic)
     return "success", 201
 
+
+@app.route('/testGet', methods=['GET'])
+def testGet():
+    return {'data': 'test data'}
+
 if __name__ == '__main__':
     print("creating file 1 and user1")
     myfile="file1"

@@ -11,32 +11,42 @@ Quill.register('modules/cursors', QuillCursors)
 
 window.addEventListener('load', () => {
     console.log("hello")
-  const ydoc = new Y.Doc()
-  const provider = new WebsocketProvider('ws://localhost:1234', 'quill', ydoc)
-  const type = ydoc.getText('quill')
-  const editorContainer = document.createElement('div')
+    const ydoc = new Y.Doc()
+    const provider = new WebsocketProvider('ws://localhost:1234', 'quill', ydoc)
+    const type = ydoc.getText('quill')
+    const editorContainer = document.createElement('div')
     editorContainer.setAttribute('id', 'editor')
     document.body.insertBefore(editorContainer, null)
     // editorContainer.className = styles['my-class']
 
 
-  var editor = new Quill(editorContainer, {
-    modules: {
-      cursors: true,
-      toolbar: [
-        [{ header: [1, 2, false] }],
-        ['bold', 'italic', 'underline'],
-        ['image', 'code-block']
-      ],
-      history: {
-        userOnly: true
-      }
-    },
-    placeholder: 'Start collaborating...',
-    theme: 'snow' // or 'bubble'
-  })
-  
-  const binding = new QuillBinding(type, editor, provider.awareness)
+    var editor = new Quill(editorContainer, {
+        modules: {
+            cursors: true,
+            toolbar: [
+                [{header: [1, 2, false]}],
+                ['bold', 'italic', 'underline'],
+                ['image', 'code-block']
+            ],
+            history: {
+                userOnly: true
+            }
+        },
+        placeholder: 'Start collaborating...',
+        theme: 'snow' // or 'bubble'
+    })
+
+    const binding = new QuillBinding(type, editor, provider.awareness)
+
+    const axios = require('axios')
+    axios.get('http://127.0.0.1:5000/testGet')
+        .then(response => {
+            let d = response.data.data;
+            console.log(d);
+        })
+        .catch(error => console.log(error))
+
+
 
   /*
   // Define user name and user name

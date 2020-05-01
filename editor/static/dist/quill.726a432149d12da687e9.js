@@ -27142,32 +27142,42 @@ quill__WEBPACK_IMPORTED_MODULE_3___default.a.register('modules/cursors', quill_c
 
 window.addEventListener('load', () => {
     console.log("hello")
-  const ydoc = new yjs__WEBPACK_IMPORTED_MODULE_0__["Doc"]()
-  const provider = new y_websocket__WEBPACK_IMPORTED_MODULE_1__["WebsocketProvider"]('ws://localhost:1234', 'quill', ydoc)
-  const type = ydoc.getText('quill')
-  const editorContainer = document.createElement('div')
+    const ydoc = new yjs__WEBPACK_IMPORTED_MODULE_0__["Doc"]()
+    const provider = new y_websocket__WEBPACK_IMPORTED_MODULE_1__["WebsocketProvider"]('ws://localhost:1234', 'quill', ydoc)
+    const type = ydoc.getText('quill')
+    const editorContainer = document.createElement('div')
     editorContainer.setAttribute('id', 'editor')
     document.body.insertBefore(editorContainer, null)
     // editorContainer.className = styles['my-class']
 
 
-  var editor = new quill__WEBPACK_IMPORTED_MODULE_3___default.a(editorContainer, {
-    modules: {
-      cursors: true,
-      toolbar: [
-        [{ header: [1, 2, false] }],
-        ['bold', 'italic', 'underline'],
-        ['image', 'code-block']
-      ],
-      history: {
-        userOnly: true
-      }
-    },
-    placeholder: 'Start collaborating...',
-    theme: 'snow' // or 'bubble'
-  })
-  
-  const binding = new y_quill__WEBPACK_IMPORTED_MODULE_2__["QuillBinding"](type, editor, provider.awareness)
+    var editor = new quill__WEBPACK_IMPORTED_MODULE_3___default.a(editorContainer, {
+        modules: {
+            cursors: true,
+            toolbar: [
+                [{header: [1, 2, false]}],
+                ['bold', 'italic', 'underline'],
+                ['image', 'code-block']
+            ],
+            history: {
+                userOnly: true
+            }
+        },
+        placeholder: 'Start collaborating...',
+        theme: 'snow' // or 'bubble'
+    })
+
+    const binding = new y_quill__WEBPACK_IMPORTED_MODULE_2__["QuillBinding"](type, editor, provider.awareness)
+
+    const axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
+    axios.get('http://127.0.0.1:5000/testGet')
+        .then(response => {
+            let d = response.data.data;
+            console.log(d);
+        })
+        .catch(error => console.log(error))
+
+
 
   /*
   // Define user name and user name
@@ -27185,8 +27195,6 @@ window.addEventListener('load', () => {
       // 2. Encrypt Contents
     
       // 3. Insert into database
-
-      // Commented out because this piece of code breaks function appartently
 
        var about = document.querySelector('input[name=text]');
       // here we enter the contents for encryption
@@ -27238,4 +27246,4 @@ window.addEventListener('load', () => {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=quill.317273b5477c32e1a9b3.js.map
+//# sourceMappingURL=quill.726a432149d12da687e9.js.map
